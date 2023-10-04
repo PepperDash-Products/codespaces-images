@@ -39,16 +39,16 @@ scripts :
 	@chmod +x local-scripts/*.sh
 
 dind : scripts
-	@docker build . --target dind -t ghcr.io/cse-labs/dind:beta
+	@docker build . --target dind -t ghcr.io/pepperdash-products/dind:beta
 
 k3d : dind
-	@docker build . --target k3d -t ghcr.io/cse-labs/k3d:beta
+	@docker build . --target k3d -t ghcr.io/pepperdash-products/k3d:beta
 
 k3d-rust : k3d
-	@docker build . --target k3d-rust -t ghcr.io/cse-labs/k3d-rust:beta
+	@docker build . --target k3d-rust -t ghcr.io/pepperdash-products/k3d-rust:beta
 
 k3d-wasm : k3d-rust
-	@docker build . --target k3d-wasm -t ghcr.io/cse-labs/k3d-wasm:beta
+	@docker build . --target k3d-wasm -t ghcr.io/pepperdash-products/k3d-wasm:beta
 
 jumpbox :
-	@docker build . --target jumpbox -t ghcr.io/cse-labs/jumpbox:latest
+	@docker build . --target jumpbox -t ghcr.io/pepperdash-products/jumpbox:latest
