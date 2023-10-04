@@ -56,27 +56,39 @@ jobs:
           chmod +x library-scripts/*.sh
           chmod +x local-scripts/*.sh
 
-    - name: Docker Build Jumpbox
-      run: |
-        docker build . --target jumpbox -t ghcr.io/pepperdash-products/jumpbox:latest
-        docker push -a ghcr.io/pepperdash-products/jumpbox
-
-    - name: Docker Build DinD
-      run: |
-        docker build . --target dind -t ghcr.io/pepperdash-products/dind:latest
-        docker push -a ghcr.io/pepperdash-products/dind
-
-    - name: Docker Build k3d
-      run: |
-        docker build . --target k3d -t ghcr.io/pepperdash-products/k3d:latest
-        docker push -a ghcr.io/pepperdash-products/k3d
-
-    - name: Docker Build k3d-rust
-      run: |
-        docker build . --target k3d-rust -t ghcr.io/pepperdash-products/k3d-rust:latest
-        docker push -a ghcr.io/pepperdash-products/k3d-rust
-
-    - name: Docker Build k3d-wasm
-      run: |
-        docker build . --target k3d-wasm -t ghcr.io/pepperdash-products/k3d-wasm:latest
-        docker push -a ghcr.io/pepperdash-products/k3d-wasm
+  
+    - name: Build Jumpbox
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/pepperdash-products/jumpbox:latest
+        target: jumpbox
+    - name: Build DinD
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/pepperdash-products/dind:latest
+        target: dind    
+    - name: Build k3d
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/pepperdash-products/k3d:latest
+        target: k3d
+    - name: Build k3d-rust
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/pepperdash-products/k3d-rust:latest
+        target: k3d-rust
+    - name: Build Jumpbox
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/pepperdash-products/k3d-wasm:latest
+        target: k3d-wasm
