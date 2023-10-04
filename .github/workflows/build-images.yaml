@@ -1,9 +1,6 @@
 name: Build Codespace Images
 
 on:
-  schedule:
-    # Run on Sunday at 6:00 AM UTC
-    - cron: "0 6 * * 0"
 
   push:
     branches:
@@ -21,14 +18,14 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Login to Container Registry
-      uses: docker/login-action@v1
+      uses: docker/login-action@v3
       with:
         registry: ghcr.io
-        username: ${{ secrets.GHCR_ID }}
-        password: ${{ secrets.GHCR_PAT }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Docker Pull
       run: |
@@ -61,25 +58,25 @@ jobs:
 
     - name: Docker Build Jumpbox
       run: |
-        docker build . --target jumpbox -t ghcr.io/cse-labs/jumpbox:latest
-        docker push -a ghcr.io/cse-labs/jumpbox
+        docker build . --target jumpbox -t ghcr.io/pepperdash-products/jumpbox:latest
+        docker push -a ghcr.io/pepperdash-products/jumpbox
 
     - name: Docker Build DinD
       run: |
-        docker build . --target dind -t ghcr.io/cse-labs/dind:latest
-        docker push -a ghcr.io/cse-labs/dind
+        docker build . --target dind -t ghcr.io/pepperdash-products/dind:latest
+        docker push -a ghcr.io/pepperdash-products/dind
 
     - name: Docker Build k3d
       run: |
-        docker build . --target k3d -t ghcr.io/cse-labs/k3d:latest
-        docker push -a ghcr.io/cse-labs/k3d
+        docker build . --target k3d -t ghcr.io/pepperdash-products/k3d:latest
+        docker push -a ghcr.io/pepperdash-products/k3d
 
     - name: Docker Build k3d-rust
       run: |
-        docker build . --target k3d-rust -t ghcr.io/cse-labs/k3d-rust:latest
-        docker push -a ghcr.io/cse-labs/k3d-rust
+        docker build . --target k3d-rust -t ghcr.io/pepperdash-products/k3d-rust:latest
+        docker push -a ghcr.io/pepperdash-products/k3d-rust
 
     - name: Docker Build k3d-wasm
       run: |
-        docker build . --target k3d-wasm -t ghcr.io/cse-labs/k3d-wasm:latest
-        docker push -a ghcr.io/cse-labs/k3d-wasm
+        docker build . --target k3d-wasm -t ghcr.io/pepperdash-products/k3d-wasm:latest
+        docker push -a ghcr.io/pepperdash-products/k3d-wasm
